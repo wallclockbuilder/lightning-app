@@ -52,7 +52,7 @@ const RestoreSeedView = ({ store, wallet }) => (
               wallet.setRestoreSeed({ word, index: seedIndex - 1 })
             }
             key={i}
-            autoFocus={i === 0}
+            autoFocus={i === 0 && store.wallet.autofocusRestoreInput}
             onSubmitEditing={() => wallet.initNextRestorePage()}
           />
         ))}

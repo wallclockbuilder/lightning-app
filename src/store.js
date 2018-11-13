@@ -48,6 +48,7 @@ export class Store {
         passwordVerify: '',
         seedVerify: ['', '', ''],
         seedIndex: 0,
+        autofocusRestoreInput: true,
         restoreIndex: 0,
         restoreSeed: Array(24).fill(''),
       },
