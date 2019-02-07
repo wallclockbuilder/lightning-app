@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import Background from '../component/background';
 import MainContent from '../component/main-content';
 import { Header, Title } from '../component/header';
-import { color } from '../component/style';
+import { createStyles, maxWidth } from '../component/media-query';
+import { color, breakWidth, smallBreakWidth } from '../component/style';
 import { H4Text } from '../component/text';
 import Icon from '../component/icon';
 import ChannelIcon from '../asset/icon/channel';
@@ -17,6 +18,7 @@ import {
   SmallBalanceLabel,
 } from '../component/label';
 import { Button, QrButton, GlasButton, DownButton } from '../component/button';
+import { calculateTopPadding } from '../helper';
 
 //
 // Home View
@@ -83,7 +85,7 @@ HomeView.propTypes = {
 // Balance Display
 //
 
-const balanceStyles = StyleSheet.create({
+const baseBalanceStyles = {
   wrapper: {
     flex: 1,
     justifyContent: 'center',
@@ -92,25 +94,60 @@ const balanceStyles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 5,
   },
-});
+};
 
-const BalanceDisplay = ({
-  depositLabel,
-  channelBalanceLabel,
-  unitLabel,
-  toggleDisplayFiat,
-}) => (
-  <View style={balanceStyles.wrapper}>
-    <Button onPress={toggleDisplayFiat}>
-      <BalanceLabel>
-        <BalanceLabelNumeral>{channelBalanceLabel}</BalanceLabelNumeral>
-        <BalanceLabelUnit>{unitLabel}</BalanceLabelUnit>
-      </BalanceLabel>
-      <H4Text style={balanceStyles.smallLabel}>Chain Deposit</H4Text>
-      <SmallBalanceLabel unit={unitLabel}>{depositLabel}</SmallBalanceLabel>
-    </Button>
-  </View>
+const balanceStyles = createStyles(
+  baseBalanceStyles,
+
+  maxWidth(breakWidth, {
+    wrapper: {
+      width: 350,
+    },
+  }),
+
+  maxWidth(smallBreakWidth, {
+    wrapper: {
+      width: 250,
+    },
+  })
 );
+
+class BalanceDisplay extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      height: 80,
+    };
+  }
+
+  render() {
+    const {
+      depositLabel,
+      channelBalanceLabel,
+      unitLabel,
+      toggleDisplayFiat,
+    } = this.props;
+    return (
+      <View style={balanceStyles.wrapper}>
+        <Button onPress={toggleDisplayFiat}>
+          <BalanceLabel>
+            <BalanceLabelNumeral>{channelBalanceLabel}</BalanceLabelNumeral>
+            <BalanceLabelUnit
+              onLayout={event => {
+                this.setState({ height: event.nativeEvent.layout.height });
+              }}
+              style={{ paddingTop: calculateTopPadding(this.state.height) }}
+            >
+              {unitLabel}
+            </BalanceLabelUnit>
+          </BalanceLabel>
+          <H4Text style={balanceStyles.smallLabel}>Chain Deposit</H4Text>
+          <SmallBalanceLabel unit={unitLabel}>{depositLabel}</SmallBalanceLabel>
+        </Button>
+      </View>
+    );
+  }
+}
 
 BalanceDisplay.propTypes = {
   depositLabel: PropTypes.string.isRequired,
