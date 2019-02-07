@@ -15,12 +15,11 @@ const balanceStyles = StyleSheet.create({
   numeral: {
     fontFamily: 'WorkSans ExtraLight',
     fontSize: font.sizeXXXL,
-    lineHeight: font.lineHeightXXXL,
+    lineHeight: null,
   },
   unit: {
     fontFamily: 'WorkSans Regular',
     fontSize: font.sizeL,
-    lineHeight: 60,
     marginLeft: 10,
   },
 });
@@ -35,7 +34,13 @@ BalanceLabel.propTypes = {
 };
 
 export const BalanceLabelNumeral = ({ children, style }) => (
-  <Text style={[balanceStyles.numeral, style]}>{children}</Text>
+  <Text
+    style={[balanceStyles.numeral, style]}
+    adjustsFontSizeToFit={true}
+    numberOfLines={1}
+  >
+    {children}
+  </Text>
 );
 
 BalanceLabelNumeral.propTypes = {
