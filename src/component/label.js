@@ -48,8 +48,12 @@ BalanceLabelNumeral.propTypes = {
   style: RNText.propTypes.style,
 };
 
-export const BalanceLabelUnit = ({ children, style }) =>
-  children ? <Text style={[balanceStyles.unit, style]}>{children}</Text> : null;
+export const BalanceLabelUnit = ({ children, style, ...props }) =>
+  children ? (
+    <Text style={[balanceStyles.unit, style]} {...props}>
+      {children}
+    </Text>
+  ) : null;
 
 BalanceLabelUnit.propTypes = {
   children: PropTypes.string,
