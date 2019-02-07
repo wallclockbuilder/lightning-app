@@ -321,3 +321,19 @@ export const generateArc = (x, y, radius, startAngle, endAngle) => {
     'Z',
   ].join(' ');
 };
+
+/**
+ * Calculate the appropriate top padding for the btc unit that sits next to the main
+ * home screen balance. This is needed because the height of the balance adjusts
+ * dynamically to its width.
+ * @param  {number} height The height of the balance.
+ * @return {number}        The amount of padding to put at the top of the unit.
+ */
+export const calculateTopPadding = height => {
+  if (height >= 80) {
+    return 15;
+  } else if (height >= 60) {
+    return 10;
+  }
+  return 5;
+};

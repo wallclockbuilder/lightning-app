@@ -812,4 +812,21 @@ describe('Helpers Unit Tests', () => {
       );
     });
   });
+
+  describe('calculateTopPadding()', () => {
+    it('should work for heights greater than 80', () => {
+      const padding = helpers.calculateTopPadding(85);
+      expect(padding, 'to equal', 15);
+    });
+
+    it('should work for 60 <= height < 80', () => {
+      const padding = helpers.calculateTopPadding(65);
+      expect(padding, 'to equal', 10);
+    });
+
+    it('should work for heights < 60', () => {
+      const padding = helpers.calculateTopPadding(40);
+      expect(padding, 'to equal', 5);
+    });
+  });
 });
