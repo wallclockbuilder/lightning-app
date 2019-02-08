@@ -38,7 +38,7 @@ const styles = createStyles(
   })
 );
 
-const SettingView = ({ store, nav, wallet }) => {
+const SettingView = ({ store, nav, wallet, auth }) => {
   return (
     <Background color={color.blackDark}>
       <Header separator>
@@ -69,7 +69,9 @@ const SettingView = ({ store, nav, wallet }) => {
         />
         <SettingItem
           name="Change Password"
-          onSelect={() => wallet.initResetPassword()}
+          onSelect={() =>
+            wallet ? wallet.initResetPassword() : auth.initResetPin()
+          }
           arrow
         />
         <SettingHeader name="ADVANCED" style={styles.advanced} />
@@ -82,7 +84,8 @@ const SettingView = ({ store, nav, wallet }) => {
 SettingView.propTypes = {
   store: PropTypes.object.isRequired,
   nav: PropTypes.object.isRequired,
-  wallet: PropTypes.object.isRequired,
+  wallet: PropTypes.object,
+  auth: PropTypes.object,
 };
 
 export default observer(SettingView);
