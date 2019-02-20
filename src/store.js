@@ -37,6 +37,7 @@ export class Store {
       pubKey: null,
       walletAddress: null,
       displayCopied: false,
+      balanceHeight: 80,
       auth: {
         pin: '',
         newPin: '',

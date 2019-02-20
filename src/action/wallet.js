@@ -511,6 +511,17 @@ class WalletAction {
       log.error('Getting exchange rate failed', err);
     }
   }
+
+  /**
+   * Set the height of Home's main channel balance label.
+   * This is used for calculating the padding for the top of the btc
+   * unit next to the balance amount.
+   * @param  {number} The height of the balance.
+   * @return {undefined}
+   */
+  setBalanceHeight({ height }) {
+    this._store.balanceHeight = height;
+  }
 }
 
 export default WalletAction;

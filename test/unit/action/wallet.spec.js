@@ -618,4 +618,11 @@ describe('Action Wallet Unit Tests', () => {
       expect(db.save, 'was not called');
     });
   });
+
+  describe('setBalanceHeight()', () => {
+    it('should set the balance height in the store', () => {
+      wallet.setBalanceHeight({ height: 42 });
+      expect(store.balanceHeight, 'to equal', 42);
+    });
+  });
 });
