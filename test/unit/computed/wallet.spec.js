@@ -81,5 +81,23 @@ describe('Computed Wallet Unit Tests', () => {
       expect(store.newPasswordCopy, 'to match', /strong password/);
       expect(store.newPasswordSuccess, 'to equal', true);
     });
+
+    it('should set balance padding for heights > 80', () => {
+      store.balanceHeight = 85;
+      ComputedWallet(store);
+      expect(store.balancePaddingTop, 'to equal', 15);
+    });
+
+    it('should set balance padding for heights < 80', () => {
+      store.balanceHeight = 65;
+      ComputedWallet(store);
+      expect(store.balancePaddingTop, 'to equal', 10);
+    });
+
+    it('should work for heights < 60', () => {
+      store.balanceHeight = 40;
+      ComputedWallet(store);
+      expect(store.balancePaddingTop, 'to equal', 5);
+    });
   });
 });

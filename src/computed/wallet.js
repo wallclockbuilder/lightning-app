@@ -42,6 +42,9 @@ const ComputedWallet = store => {
       }
       return newPassword.length >= MIN_PASSWORD_LENGTH;
     },
+    get balancePaddingTop() {
+      return calculateTopPadding({ height: store.balanceHeight });
+    },
   });
 };
 
@@ -57,6 +60,22 @@ const getNewPasswordCopy = ({ newPassword }) => {
     return 'Pro tip: add a few more characters to strengthen your password.';
   }
   return '';
+};
+
+/**
+ * Calculate the appropriate top padding for the btc unit that sits next to the main
+ * home screen balance. This is needed because the height of the balance adjusts
+ * dynamically to its width.
+ * @param  {number} height The height of the balance.
+ * @return {number}        The amount of padding to put at the top of the unit.
+ */
+const calculateTopPadding = ({ height }) => {
+  if (height >= 80) {
+    return 15;
+  } else if (height >= 60) {
+    return 10;
+  }
+  return 5;
 };
 
 export default ComputedWallet;
