@@ -67,6 +67,10 @@ const ComputedChannel = store => {
         .reduce((a, b) => a + b, 0);
       return toAmountLabel(sum, settings);
     },
+    get channelBalanceOnChainLabel() {
+      const { confirmedBalanceSatoshis, settings } = store;
+      return toAmountLabel(confirmedBalanceSatoshis, settings);
+    },
     get showChannelAlert() {
       return (store.channels || []).length === 0;
     },

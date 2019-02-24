@@ -14,6 +14,7 @@ import Text from '../component/text';
 import PlusIcon from '../../src/asset/icon/plus';
 import LightningBoltGradientIcon from '../../src/asset/icon/lightning-bolt-gradient';
 import { color, font } from '../component/style';
+import BitcoinIcon from '../asset/icon/bitcoin';
 
 //
 // Channel View
@@ -96,6 +97,7 @@ const ChannelList = ({ store, channel }) => {
     channelBalanceInactiveLabel,
     channelBalancePendingLabel,
     channelBalanceClosingLabel,
+    channelBalanceOnChainLabel,
     unitLabel,
   } = store;
   return (
@@ -105,6 +107,7 @@ const ChannelList = ({ store, channel }) => {
         channelBalanceInactiveLabel={channelBalanceInactiveLabel}
         channelBalancePendingLabel={channelBalancePendingLabel}
         channelBalanceClosingLabel={channelBalanceClosingLabel}
+        channelBalanceOnChainLabel={channelBalanceOnChainLabel}
         unitLabel={unitLabel}
       />
       <ListContent>
@@ -164,6 +167,7 @@ const ChannelSummary = ({
   channelBalanceInactiveLabel,
   channelBalancePendingLabel,
   channelBalanceClosingLabel,
+  channelBalanceOnChainLabel,
   unitLabel,
 }) => (
   <View style={summaryStyles.wrapper}>
@@ -195,6 +199,17 @@ const ChannelSummary = ({
         {channelBalanceClosingLabel} {unitLabel}
       </Text>
     </View>
+    <View style={summaryStyles.box}>
+      <BitcoinIcon
+        height={10}
+        width={10}
+        style={{ marginRight: 10, fill: '#fff' }}
+      />
+      <Text style={summaryStyles.txt}>On-chain</Text>
+      <Text style={[summaryStyles.txt, summaryStyles.total]}>
+        {channelBalanceOnChainLabel} {unitLabel}
+      </Text>
+    </View>
   </View>
 );
 
@@ -203,6 +218,7 @@ ChannelSummary.propTypes = {
   channelBalanceInactiveLabel: PropTypes.string.isRequired,
   channelBalancePendingLabel: PropTypes.string.isRequired,
   channelBalanceClosingLabel: PropTypes.string.isRequired,
+  channelBalanceOnChainLabel: PropTypes.string.isRequired,
   unitLabel: PropTypes.string,
 };
 

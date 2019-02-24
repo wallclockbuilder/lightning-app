@@ -46,18 +46,21 @@ describe('Computed Channels Unit Tests', () => {
       channelPoint: 'some-channel-point',
       status: 'pending-closing',
     });
+    store.confirmedBalanceSatoshis += 10000000;
   });
 
   describe('ComputedChannel()', () => {
     it('should work with empty store', () => {
       store.channels = null;
       store.pendingChannels = null;
+      store.confirmedBalanceSatoshis = 0;
       ComputedChannel(store);
       expect(store.computedChannels.length, 'to equal', 0);
       expect(store.channelBalanceOpenLabel, 'to equal', '0');
       expect(store.channelBalanceInactiveLabel, 'to equal', '0');
       expect(store.channelBalancePendingLabel, 'to equal', '0');
       expect(store.channelBalanceClosingLabel, 'to equal', '0');
+      expect(store.channelBalanceOnChainLabel, 'to equal', '0');
       expect(store.showChannelAlert, 'to equal', true);
     });
 
@@ -88,6 +91,7 @@ describe('Computed Channels Unit Tests', () => {
       expect(store.channelBalanceInactiveLabel, 'to match', /0[,.]0199/);
       expect(store.channelBalancePendingLabel, 'to match', /0[,.]006/);
       expect(store.channelBalanceClosingLabel, 'to match', /0[,.]005/);
+      expect(store.channelBalanceOnChainLabel, 'to match', /0[,.]1/);
       expect(store.showChannelAlert, 'to equal', false);
     });
 
@@ -104,6 +108,7 @@ describe('Computed Channels Unit Tests', () => {
       expect(store.channelBalanceInactiveLabel, 'to match', /137[,.]21/);
       expect(store.channelBalancePendingLabel, 'to match', /41[,.]37/);
       expect(store.channelBalanceClosingLabel, 'to match', /34[,.]48/);
+      expect(store.channelBalanceOnChainLabel, 'to match', /689[,.]51/);
     });
   });
 });
