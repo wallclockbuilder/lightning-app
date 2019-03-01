@@ -62,6 +62,7 @@ describe('Computed Channels Unit Tests', () => {
       expect(store.channelBalanceClosingLabel, 'to equal', '0');
       expect(store.channelBalanceOnChainLabel, 'to equal', '0');
       expect(store.showChannelAlert, 'to equal', true);
+      expect(store.channelStatus, 'to equal', 'error');
     });
 
     it('should aggregate open and pending channels', () => {
@@ -93,6 +94,7 @@ describe('Computed Channels Unit Tests', () => {
       expect(store.channelBalanceClosingLabel, 'to match', /0[,.]005/);
       expect(store.channelBalanceOnChainLabel, 'to match', /0[,.]1/);
       expect(store.showChannelAlert, 'to equal', false);
+      expect(store.channelStatus, 'to equal', 'success');
     });
 
     it('should channel values in usd', () => {
@@ -109,6 +111,18 @@ describe('Computed Channels Unit Tests', () => {
       expect(store.channelBalancePendingLabel, 'to match', /41[,.]37/);
       expect(store.channelBalanceClosingLabel, 'to match', /34[,.]48/);
       expect(store.channelBalanceOnChainLabel, 'to match', /689[,.]51/);
+    });
+
+    it('should display pending status', () => {
+      store.channels = null;
+      ComputedChannel(store);
+      expect(store.channelStatus, 'to equal', 'info');
+    });
+
+    it('should display inactive status', () => {
+      store.channels[0].active = false;
+      ComputedChannel(store);
+      expect(store.channelStatus, 'to equal', 'inactive');
     });
   });
 });
